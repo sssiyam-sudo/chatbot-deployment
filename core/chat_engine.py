@@ -21,7 +21,7 @@ def get_llm_chain():
 
     return RunnablePassthrough.assign(messages=itemgetter("messages") | trimmer) | prompt | llm
 
-def conversation_flow(chain, message_history, user_input):
+def llmGen_withHistory(chain, message_history, user_input):
     llm_generation = chain.invoke({"messages": message_history + [HumanMessage(content=user_input)]})
     message_history.append(HumanMessage(content=user_input))
     message_history.append(AIMessage(content=llm_generation))
